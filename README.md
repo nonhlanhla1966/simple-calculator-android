@@ -4,7 +4,9 @@ A lightweight, fully offline, native Android calculator. No ads, no login,
 no internet permission, no unnecessary dependencies — just fast everyday
 arithmetic.
 
-![CI](https://github.com/REPLACE_ME/simple-calculator-android/actions/workflows/android-build.yml/badge.svg)
+![CI](https://github.com/nonhlanhla1966/simple-calculator-android/actions/workflows/android-build.yml/badge.svg)
+
+_This repository is private._
 
 ## Features
 
@@ -53,7 +55,7 @@ what makes the arithmetic itself fast to test and easy to trust.
 command-line setup.
 
 ```bash
-git clone https://github.com/REPLACE_ME/simple-calculator-android.git
+git clone https://github.com/nonhlanhla1966/simple-calculator-android.git
 cd simple-calculator-android
 ./gradlew assembleDebug
 ```
