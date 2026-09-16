@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--
+        The calculator always uses a dark, high-contrast interface (like most
+        native calculator apps) regardless of the system light/dark setting,
+        so digits and operators stay clearly legible at a glance.
+    -->
+    <style name="Theme.SimpleCalculator" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/calc_operator_bg</item>
+        <item name="colorPrimaryDark">@color/calc_background</item>
+        <item name="colorAccent">@color/calc_operator_bg</item>
+        <item name="android:windowBackground">@color/calc_background</item>
+        <item name="android:statusBarColor" tools:targetApi="21">@color/calc_background</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/calc_background</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+    </style>
+</resources>

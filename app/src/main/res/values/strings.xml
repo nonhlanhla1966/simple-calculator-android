@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Simple Calculator</string>
+
+    <string name="btn_clear">AC</string>
+    <string name="btn_backspace">⌫</string>
+    <string name="btn_percent">%</string>
+    <string name="btn_divide">÷</string>
+    <string name="btn_multiply">×</string>
+    <string name="btn_subtract">−</string>
+    <string name="btn_add">+</string>
+    <string name="btn_equals">=</string>
+    <string name="btn_decimal">.</string>
+    <string name="btn_sign">+/−</string>
+
+    <string name="desc_clear">All clear</string>
+    <string name="desc_backspace">Delete last entry</string>
+    <string name="desc_percent">Percent</string>
+    <string name="desc_sign">Toggle positive or negative</string>
+    <string name="desc_result_display">Calculation result</string>
+    <string name="desc_expression_display">Current expression</string>
+</resources>

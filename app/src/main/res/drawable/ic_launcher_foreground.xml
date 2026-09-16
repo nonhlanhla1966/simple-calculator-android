@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Rounded calculator body -->
+    <path
+        android:fillColor="#2C2C2E"
+        android:pathData="M28,20 h52 a8,8 0 0 1 8,8 v52 a8,8 0 0 1 -8,8 h-52 a8,8 0 0 1 -8,-8 v-52 a8,8 0 0 1 8,-8 z" />
+
+    <!-- Display -->
+    <path
+        android:fillColor="#FF9F0A"
+        android:pathData="M34,30 h40 v14 h-40 z" />
+
+    <!-- Button dots grid -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,54 h8 v8 h-8 z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,54 h8 v8 h-8 z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M66,54 h8 v8 h-8 z" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,68 h8 v8 h-8 z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,68 h8 v8 h-8 z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M66,68 h8 v8 h-8 z" />
+</vector>
