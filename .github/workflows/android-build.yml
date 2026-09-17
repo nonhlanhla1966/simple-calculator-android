@@ -3,6 +3,12 @@ name: Android CI/CD
 # Builds and tests on every push/PR. When a version tag like "v1.0.0" is
 # pushed, it additionally creates a public GitHub Release with the built
 # APK attached, so there is always a working, downloadable artifact.
+#
+# Note: GitHub's ubuntu-latest runners ship with an Android SDK already
+# installed (see actions/runner-images). We use that directly via
+# sdkmanager rather than a third-party "setup-android" action, since it's
+# more reliable and needs no extra downloads beyond the specific
+# platform/build-tools versions this project targets.
 on:
   push:
     branches: [ "main" ]
@@ -27,8 +33,12 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Install required Android SDK packages
+        run: |
+          echo "sdk.dir=${ANDROID_HOME}" > local.properties
+          yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" \
+            "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -71,8 +81,12 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Install required Android SDK packages
+        run: |
+          echo "sdk.dir=${ANDROID_HOME}" > local.properties
+          yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" \
+            "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
