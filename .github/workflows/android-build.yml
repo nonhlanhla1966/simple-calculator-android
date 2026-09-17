@@ -17,6 +17,12 @@ on:
     branches: [ "main" ]
   workflow_dispatch: {}
 
+# Needed so the built-in GITHUB_TOKEN can create a Release and upload the
+# APK to it in the "release" job below (many repos now default this to
+# read-only, which makes softprops/action-gh-release fail with a 403).
+permissions:
+  contents: write
+
 jobs:
   build-and-test:
     name: Build, unit test, and package APK
