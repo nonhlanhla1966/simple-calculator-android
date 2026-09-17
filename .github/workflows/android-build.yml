@@ -1,14 +1,5 @@
 name: Android CI/CD
 
-# Builds and tests on every push/PR. When a version tag like "v1.0.0" is
-# pushed, it additionally creates a public GitHub Release with the built
-# APK attached, so there is always a working, downloadable artifact.
-#
-# Note: GitHub's ubuntu-latest runners ship with an Android SDK already
-# installed (see actions/runner-images). We use that directly via
-# sdkmanager rather than a third-party "setup-android" action, since it's
-# more reliable and needs no extra downloads beyond the specific
-# platform/build-tools versions this project targets.
 on:
   push:
     branches: [ "main" ]
@@ -17,21 +8,44 @@ on:
     branches: [ "main" ]
   workflow_dispatch: {}
 
-# Needed so the built-in GITHUB_TOKEN can create a Release and upload the
-# APK to it in the "release" job below (many repos now default this to
-# read-only, which makes softprops/action-gh-release fail with a 403).
 permissions:
   contents: write
 
 jobs:
   build-and-test:
-    name: Build, unit test, and package APK
+    name: Test engine, build APK
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ── 1. Unit tests ──────────────────────────────────────────────────────
+      # CalculatorEngine.kt has zero Android framework imports, so we test it
+      # directly with kotlinc + JUnit4 on a plain JVM — exactly as was verified
+      # in the build environment before this project was pushed to GitHub.
+      # This is both faster and more reliable than routing pure-Kotlin logic
+      # through the Android Gradle Plugin.
+      - name: Install Kotlin compiler and JUnit4
+        run: sudo apt-get install -y --no-install-recommends kotlin junit4
+
+      - name: Compile calculator engine and its unit tests
+        run: |
+          mkdir -p /tmp/test-classes
+          kotlinc \
+            app/src/main/java/com/simplecalc/app/CalculatorEngine.kt \
+            app/src/test/java/com/simplecalc/app/CalculatorEngineTest.kt \
+            -cp /usr/share/java/junit4.jar \
+            -d /tmp/test-classes \
+            2>&1 | grep -v "^OpenJDK"
+
+      - name: Run 33 unit tests (addition, subtraction, multiplication, division,
+            decimals, negatives, percent, divide-by-zero, AC, backspace, chaining)
+        run: |
+          java -cp "/tmp/test-classes:/usr/share/java/kotlin-stdlib.jar:/usr/share/java/junit4.jar:/usr/share/java/hamcrest-core.jar" \
+            org.junit.runner.JUnitCore com.simplecalc.app.CalculatorEngineTest
+
+      # ── 2. Android APK build ───────────────────────────────────────────────
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -39,7 +53,7 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      - name: Install required Android SDK packages
+      - name: Set up Android SDK
         run: |
           echo "sdk.dir=${ANDROID_HOME}" > local.properties
           yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
@@ -49,21 +63,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Run calculator logic unit tests
-        run: ./gradlew testDebugUnitTest --stacktrace
-
-      - name: Upload unit test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: unit-test-results
-          path: app/build/reports/tests/testDebugUnitTest/
-          if-no-files-found: warn
-
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace --no-build-cache
 
-      - name: Upload debug APK artifact
+      - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
           name: simple-calculator-debug-apk
@@ -87,7 +90,7 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      - name: Install required Android SDK packages
+      - name: Set up Android SDK
         run: |
           echo "sdk.dir=${ANDROID_HOME}" > local.properties
           yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
@@ -98,16 +101,19 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build installable APK
-        # AGP auto-signs debug builds with a generated debug keystore, so this
-        # APK can be sideloaded immediately. We deliberately do not commit a
-        # release keystore/secrets, so this is the APK published in Releases.
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --stacktrace --no-build-cache
 
       - name: Rename APK for release
         run: |
           mkdir -p release-output
           cp app/build/outputs/apk/debug/app-debug.apk \
-             release-output/SimpleCalculator-${{ github.ref_name }}.apk
+             "release-output/SimpleCalculator-${{ github.ref_name }}.apk"
+
+      - name: Delete previous release if exists
+        run: |
+          gh release delete "${{ github.ref_name }}" --yes 2>/dev/null || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release with APK
         uses: softprops/action-gh-release@v2
