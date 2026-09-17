@@ -1,80 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!--
-        All button styles inherit from Widget.MaterialComponents.Button so that
-        MaterialButton renders correctly (backgroundTint, rippleColor, cornerRadius
-        all work as expected). Layout dimensions (width/height/weight) are NOT
-        set here — they are set directly in activity_main.xml so they are never
-        ambiguous regardless of which parent LinearLayout the button is in.
+        Button styles use android:background with custom ripple drawables.
+        NO layout dimensions (width/height/weight) are set here — they are
+        declared directly on each Button in activity_main.xml so there is
+        no ambiguity about which layout direction applies.
     -->
 
-    <style name="CalcButton.Number" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/calc_number_bg</item>
-        <item name="rippleColor">@color/ripple_light</item>
+    <style name="CalcButton.Number">
+        <item name="android:background">@drawable/bg_button_number</item>
         <item name="android:textColor">@color/calc_number_text</item>
         <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="cornerRadius">100dp</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:insetLeft">0dp</item>
-        <item name="android:insetRight">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">0dp</item>
-        <item name="stateListAnimator">@null</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:gravity">center</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 
-    <style name="CalcButton.Function" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/calc_function_bg</item>
-        <item name="rippleColor">@color/ripple_dark</item>
+    <style name="CalcButton.Function">
+        <item name="android:background">@drawable/bg_button_function</item>
         <item name="android:textColor">@color/calc_function_text</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="cornerRadius">100dp</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:insetLeft">0dp</item>
-        <item name="android:insetRight">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">0dp</item>
-        <item name="stateListAnimator">@null</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:gravity">center</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 
-    <style name="CalcButton.Operator" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/calc_operator_bg</item>
-        <item name="rippleColor">@color/ripple_light</item>
+    <style name="CalcButton.Operator">
+        <item name="android:background">@drawable/bg_button_operator</item>
         <item name="android:textColor">@color/calc_operator_text</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="cornerRadius">100dp</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:insetLeft">0dp</item>
-        <item name="android:insetRight">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">0dp</item>
-        <item name="stateListAnimator">@null</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:gravity">center</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 
-    <style name="CalcButton.Equals" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/calc_equals_bg</item>
-        <item name="rippleColor">@color/ripple_light</item>
+    <style name="CalcButton.Equals">
+        <item name="android:background">@drawable/bg_button_equals</item>
         <item name="android:textColor">@color/calc_equals_text</item>
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="cornerRadius">100dp</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:insetLeft">0dp</item>
-        <item name="android:insetRight">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">0dp</item>
-        <item name="stateListAnimator">@null</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:gravity">center</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 
 </resources>
